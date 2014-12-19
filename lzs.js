@@ -30,6 +30,7 @@ var scoreString = 'Score: ';
 var zombieHitPoints = 3;
 var zombies;
 var zombieSpeed = 50;
+var zombieWidth;
 
 function create() {
 	lzs.add.tileSprite(0, 0, screenWidth, screenHeight, 'background');
@@ -54,6 +55,7 @@ function create() {
 	cursors = lzs.input.keyboard.createCursorKeys();
 	fireButton = lzs.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
+	zombieWidth = lzs.cache.getImage('zombie').width;
 	createZombies();
 
 	//audio
@@ -120,7 +122,9 @@ function createZombies() {
 }
 
 function createZombie() {
-	var zombie = zombies.create(screenWidth * Math.random(), -150, 'zombie');
+	var position = Math.min(screenWidth * Math.random(), screenWidth - zombieWidth);
+
+	var zombie = zombies.create(position, -150, 'zombie');
 
 	zombie.body.velocity.y = zombieSpeed;
 	zombie.hits = 0;
@@ -134,20 +138,19 @@ function collisionHandler(bullet, zombie) {
 
 		if (zombie.hits == zombieHitPoints) {
 			zombie.alive = true;
-		    zombie.body.velocity.y = 0;
+			zombie.body.velocity.y = 0;
 
-		    if (zombie.position.x > (lzs.world.width * 0.5)) {
-		    	zombie.body.velocity.x = zombieSpeed;
-		    }
-		    else {
-		    	zombie.body.velocity.x = -zombieSpeed;
-		    }
+			if (zombie.position.x > (lzs.world.width * 0.5)) {
+				zombie.body.velocity.x = zombieSpeed;
+			}
+			else {
+				zombie.body.velocity.x = -zombieSpeed;
+			}
 
-		    score += 20;
+			score += 20;
 			scoreText.text = scoreString + score;
 		}
 	}
-
 }
 
 function render() {
