@@ -11,6 +11,7 @@ function preload() {
 	lzs.load.image('zombie', 'assets/sprites/placeholder_zombie.png');
 
 	lzs.load.audio('pew', 'assets/sounds/raygun1.mp3');
+	lzs.load.audio('zombie', 'assets/sounds/zombie1.mp3');
 }
 
 // Game vars
@@ -26,6 +27,7 @@ var raySpeed = 1000;
 var score = 0;
 var zombieHitPoints = 3;
 var zombies;
+var zombieSpawn;
 
 function create() {
 	lzs.add.tileSprite(0, 0, screenWidth, screenHeight, 'background');
@@ -54,6 +56,9 @@ function create() {
 
 	//audio
 	pew = lzs.add.audio('pew');
+	zombieSpawn = lzs.add.audio('zombie');
+
+	setTimeout(function() {zombieSpawn.play()}, 2000);
 }
 
 function update() {
@@ -125,9 +130,9 @@ function collisionHandler(bullet, zombie) {
 	zombie.hits++;
 
 	if (zombie.hits == zombieHitPoints) {
-	    zombie.kill();
+		zombie.kill();
 
-	    score += 20;
+		score += 20;
 	}
 
 }
