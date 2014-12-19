@@ -25,6 +25,8 @@ var pew;
 var ray;
 var raySpeed = 1000;
 var score = 0;
+var scoreText;
+var scoreString = 'Score: ';
 var zombieHitPoints = 3;
 var zombies;
 var zombieSpeed = 50;
@@ -56,6 +58,8 @@ function create() {
 
 	//audio
 	pew = lzs.add.audio('pew');
+
+	scoreText = lzs.add.text(10, screenHeight - 30, scoreString + score, { font: '24px Ariel', fill: '#de57d5' });
 }
 
 function update() {
@@ -132,7 +136,7 @@ function collisionHandler(bullet, zombie) {
 			zombie.alive = true;
 		    zombie.body.velocity.y = 0;
 
-		    if (zombie.position.x > (lzs.world.width * .5)) {
+		    if (zombie.position.x > (lzs.world.width * 0.5)) {
 		    	zombie.body.velocity.x = zombieSpeed;
 		    }
 		    else {
@@ -140,11 +144,12 @@ function collisionHandler(bullet, zombie) {
 		    }
 
 		    score += 20;
+			scoreText.text = scoreString + score;
 		}
 	}
 
 }
 
 function render() {
-
+	// debug
 }
