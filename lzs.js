@@ -45,17 +45,17 @@ function update() {
 				ray.body.velocity.x = -raySpeed;
 			}
 		}
-		else if (cursors.right.isDown) {
+		if (cursors.right.isDown) {
 			if (ray.position.x < (lzs.world.width - ray.width)) {
 				ray.body.velocity.x = raySpeed;
 			}
 		}
-		else if (cursors.up.isDown) {
+		if (cursors.up.isDown) {
 			if (ray.position.y > (lzs.world.height / 2)) {
 				ray.body.velocity.y = -raySpeed;
 			}
 		}
-		else if (cursors.down.isDown) {
+		if (cursors.down.isDown) {
 			if (ray.position.y < (lzs.world.height - ray.height)) {
 				ray.body.velocity.y = raySpeed;
 			}
