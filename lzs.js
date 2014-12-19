@@ -1,4 +1,4 @@
-var lzs = new Phaser.Game(1024, 768, screenHeight, Phaser.AUTO, 'lzs', { preload: preload, create: create, update: update, render: render });
+var lzs = new Phaser.Game(1024, 768, Phaser.AUTO, 'lzs', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
 	// Load sounds and sprites
