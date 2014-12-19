@@ -6,7 +6,7 @@ var lzs = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'lzs', { prelo
 function preload() {
 	// Load sounds and sprites
 
-	lzs.load.image('ray', 'assets/sprites/player.png');
+	lzs.load.image('ray', 'assets/sprites/ray-front-single.png');
 	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled.png');
 	lzs.load.image('zombie', 'assets/sprites/placeholder_zombie.png');
 
