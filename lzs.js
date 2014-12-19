@@ -6,8 +6,9 @@ var lzs = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'lzs', { prelo
 function preload() {
 	// Load sounds and sprites
 
-	lzs.load.image('ray', 'assets/sprites/player.png');
-	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled.png');
+	lzs.load.image('ray', 'assets/sprites/ray-front-single.png');
+	lzs.load.image('beam', 'assets/sprites/beam-01.png');
+	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled-gray.png');
 	lzs.load.image('zombie', 'assets/sprites/placeholder_zombie.png');
 
 	lzs.load.audio('pew', 'assets/sounds/raygun1.mp3');
@@ -38,7 +39,7 @@ function create() {
 	bullets = lzs.add.group();
 	bullets.enableBody = true;
 	bullets.physicsBodyType = Phaser.Physics.ARCADE;
-	bullets.createMultiple(30, 'ray');
+	bullets.createMultiple(30, 'beam');
 	bullets.setAll('anchor.x', 0.5);
 	bullets.setAll('anchor.y', 1);
 	bullets.setAll('outOfBoundsKill', true);
