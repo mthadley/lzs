@@ -108,7 +108,7 @@ function createZombies() {
 }
 
 function createZombie() {
-	var zombie = zombies.create(screenWidth * Math.random(), 0, 'zombie');
+	var zombie = zombies.create(screenWidth * Math.random(), -150, 'zombie');
 
 	zombie.body.velocity.y = 50;
 }
