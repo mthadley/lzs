@@ -12,6 +12,8 @@ function preload() {
 	lzs.load.image('zombie', 'assets/sprites/placeholder_zombie.png');
 
 	lzs.load.audio('pew', 'assets/sounds/raygun1.mp3');
+	lzs.load.audio('zombie', 'assets/sounds/zombie1.mp3');
+	lzs.load.audio('soundtrack', 'assets/sounds/soundtrack.mp3');
 }
 
 // Game vars
@@ -27,8 +29,10 @@ var raySpeed = 1000;
 var score = 0;
 var scoreText;
 var scoreString = 'Score: ';
+var soundtrack;
 var zombieHitPoints = 3;
 var zombies;
+var zombieSpawn;
 var zombieSpeed = 50;
 
 function create() {
@@ -58,6 +62,11 @@ function create() {
 
 	//audio
 	pew = lzs.add.audio('pew');
+	zombieSpawn = lzs.add.audio('zombie');
+	soundtrack = lzs.add.audio('soundtrack',1,true);
+
+	soundtrack.play('',0,0.3,true);
+	setTimeout(function() {zombieSpawn.play()}, 2000);
 
 	scoreText = lzs.add.text(10, screenHeight - 30, scoreString + score, { font: '24px Ariel', fill: '#de57d5' });
 }
