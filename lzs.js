@@ -8,7 +8,7 @@ function preload() {
 
 	lzs.load.image('ray', 'assets/sprites/ray-front-single.png');
 	lzs.load.image('beam', 'assets/sprites/beam-01.png');
-	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled.png');
+	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled-gray.png');
 	lzs.load.image('zombie', 'assets/sprites/placeholder_zombie.png');
 
 	lzs.load.audio('pew', 'assets/sounds/raygun1.mp3');
