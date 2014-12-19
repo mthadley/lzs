@@ -130,8 +130,14 @@ function collisionHandler(bullet, zombie) {
 
 		if (zombie.hits == zombieHitPoints) {
 			zombie.alive = true;
-		    zombie.body.velocity.x = -zombieSpeed;
 		    zombie.body.velocity.y = 0;
+
+		    if (zombie.position.x > (lzs.world.width * .5)) {
+		    	zombie.body.velocity.x = zombieSpeed;
+		    }
+		    else {
+		    	zombie.body.velocity.x = -zombieSpeed;
+		    }
 
 		    score += 20;
 		}
