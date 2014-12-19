@@ -30,15 +30,15 @@ function create() {
 
 	ray = lzs.add.sprite(screenWidth * 0.5, screenHeight * 0.8, 'ray');
 
-	//bullets
-    bullets = lzs.add.group();
-    bullets.enableBody = true;
-    bullets.physicsBodyType = Phaser.Physics.ARCADE;
-    bullets.createMultiple(30, 'ray');
-    bullets.setAll('anchor.x', 0.5);
-    bullets.setAll('anchor.y', 1);
-    bullets.setAll('outOfBoundsKill', true);
-    bullets.setAll('checkWorldBounds', true);
+	//rays
+	bullets = lzs.add.group();
+	bullets.enableBody = true;
+	bullets.physicsBodyType = Phaser.Physics.ARCADE;
+	bullets.createMultiple(30, 'ray');
+	bullets.setAll('anchor.x', 0.5);
+	bullets.setAll('anchor.y', 1);
+	bullets.setAll('outOfBoundsKill', true);
+	bullets.setAll('checkWorldBounds', true);
 
 	lzs.physics.enable(ray, Phaser.Physics.ARCADE);
 
@@ -85,13 +85,13 @@ function fireRay() {
 	if (lzs.time.now > fireTime) {
 		pew.play();
 
-        bullet = bullets.getFirstExists(false);
+		bullet = bullets.getFirstExists(false);
 
-        if (bullet) {
-            bullet.reset(ray.x, ray.y + 8);
-            bullet.body.velocity.y = -bulletSpeed;
-            fireTime = lzs.time.now + fireDelay;
-        }
+		if (bullet) {
+			bullet.reset(ray.x, ray.y + 8);
+			bullet.body.velocity.y = -bulletSpeed;
+			fireTime = lzs.time.now + fireDelay;
+		}
 	}
 }
 
