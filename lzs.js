@@ -99,7 +99,7 @@ function fireRay() {
 		bullet = bullets.getFirstExists(false);
 
 		if (bullet) {
-			bullet.reset(ray.x, ray.y + 8);
+			bullet.reset(ray.x + 65, ray.y + 8);
 			bullet.body.velocity.y = -bulletSpeed;
 			fireTime = lzs.time.now + fireDelay;
 		}
@@ -110,6 +110,7 @@ function createZombies() {
 	zombies = lzs.add.group();
 	zombies.enableBody = true;
 	zombies.physicsBodyType = Phaser.Physics.ARCADE;
+	zombies.setAll('outOfBoundsKill', true);
 
 	lzs.time.events.loop(2000, createZombie, this);
 }
