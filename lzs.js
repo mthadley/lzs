@@ -7,6 +7,7 @@ function preload() {
 	// Load sounds and sprites
 
 	lzs.load.image('ray', 'assets/sprites/player.png');
+	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled.png');
 
 }
 
@@ -15,6 +16,8 @@ function preload() {
 var ray;
 
 function create() {
+
+	lzs.add.tileSprite(0, 0, screenWidth, screenHeight, 'background');
 
 	lzs.physics.startSystem(Phaser.Physics.ARCADE);
 
