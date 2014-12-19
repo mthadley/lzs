@@ -1,5 +1,6 @@
 var screenWidth = 1024;
 var screenHeight = 768;
+var loseText = 'You lost. You are a loser.';
 
 var lzs = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'lzs', { preload: preload, create: create, update: update, render: render });
 
@@ -24,13 +25,14 @@ var cursors;
 var fireButton;
 var fireDelay =200;
 var fireTime = 0;
+var gameLost = false;
 var pew;
 var ray;
 var raySpeed = 1000;
 var score = 0;
-var scoreText;
 var scoreString = 'Score: ';
 var soundtrack;
+var scoreText;
 var zombieHitPoints = 3;
 var zombies;
 var zombieSpawn;
@@ -71,7 +73,12 @@ function create() {
 	soundtrack.play('',0,0.3,true);
 	setTimeout(function() {zombieSpawn.play()}, 2000);
 
-	scoreText = lzs.add.text(10, screenHeight - 30, scoreString + score, { font: '24px Ariel', fill: '#de57d5' });
+	//text
+	stateText = lzs.add.text(lzs.world.centerX, lzs.world.centerY, ' ', { font: '84px Arial', fill: '#de57d5', textShadow: '#fff'  });
+    stateText.anchor.setTo(0.5, 0.5);
+    stateText.visible = false;
+
+	scoreText = lzs.add.text(10, screenHeight - 30, scoreString + score, { font: '24px Arial', fill: '#de57d5', textShadow: '#fff' });
 }
 
 function update() {
@@ -104,7 +111,21 @@ function update() {
 		}
 
 		//collision detection
-		lzs.physics.arcade.overlap(bullets, zombies, collisionHandler);
+		lzs.physics.arcade.overlap(bullets, zombies, zombieBulletCollisionHandler);
+
+		zombies.forEach(function(zombie) {
+			if (zombie.position.y > (lzs.world.height - zombie.height)) {
+				gameLost = true;
+			}
+		}, this);
+
+		if (gameLost) {
+				stateText.text = loseText;
+				stateText.visible = true;
+				zombies.destroy();
+				bullets.destroy();
+				ray.destroy();
+		}
 	}
 }
 
@@ -141,7 +162,7 @@ function createZombie() {
 	zombie.alive = false;
 }
 
-function collisionHandler(bullet, zombie) {
+function zombieBulletCollisionHandler(bullet, zombie) {
 	if (!zombie.alive) {
 		bullet.kill();
 		zombie.hits++;
@@ -151,10 +172,10 @@ function collisionHandler(bullet, zombie) {
 			zombie.body.velocity.y = 0;
 
 			if (zombie.position.x > (lzs.world.width * 0.5)) {
-				zombie.body.velocity.x = zombieSpeed;
+				zombie.body.velocity.x = zombieSpeed * 3;
 			}
 			else {
-				zombie.body.velocity.x = -zombieSpeed;
+				zombie.body.velocity.x = -zombieSpeed * 3;
 			}
 
 			score += 20;
