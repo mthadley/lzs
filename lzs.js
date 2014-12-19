@@ -14,11 +14,14 @@ function preload() {
 
 // Game vars
 
+var bulletSpeed = 1500;
 var cursors;
 var fireButton;
+var fireDelay =200;
+var fireTime = 0;
+var pew;
 var ray;
 var raySpeed = 1000;
-var pew;
 
 function create() {
 	lzs.add.tileSprite(0, 0, screenWidth, screenHeight, 'background');
@@ -26,6 +29,16 @@ function create() {
 	lzs.physics.startSystem(Phaser.Physics.ARCADE);
 
 	ray = lzs.add.sprite(screenWidth * 0.5, screenHeight * 0.8, 'ray');
+
+	//bullets
+    bullets = lzs.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    bullets.createMultiple(30, 'ray');
+    bullets.setAll('anchor.x', 0.5);
+    bullets.setAll('anchor.y', 1);
+    bullets.setAll('outOfBoundsKill', true);
+    bullets.setAll('checkWorldBounds', true);
 
 	lzs.physics.enable(ray, Phaser.Physics.ARCADE);
 
@@ -61,6 +74,7 @@ function update() {
 				ray.body.velocity.y = raySpeed;
 			}
 		}
+
 		if (fireButton.isDown) {
 			fireRay();
 		}
@@ -68,7 +82,17 @@ function update() {
 }
 
 function fireRay() {
-	pew.play();
+	if (lzs.time.now > fireTime) {
+		pew.play();
+
+        bullet = bullets.getFirstExists(false);
+
+        if (bullet) {
+            bullet.reset(ray.x, ray.y + 8);
+            bullet.body.velocity.y = -bulletSpeed;
+            fireTime = lzs.time.now + fireDelay;
+        }
+	}
 }
 
 function render() {
