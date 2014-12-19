@@ -23,6 +23,8 @@ var fireTime = 0;
 var pew;
 var ray;
 var raySpeed = 1000;
+var score = 0;
+var zombieHitPoints = 3;
 var zombies;
 
 function create() {
@@ -82,6 +84,9 @@ function update() {
 		if (fireButton.isDown) {
 			fireRay();
 		}
+
+		//collision detection
+		lzs.physics.arcade.overlap(bullets, zombies, collisionHandler);
 	}
 }
 
@@ -111,6 +116,20 @@ function createZombie() {
 	var zombie = zombies.create(screenWidth * Math.random(), -150, 'zombie');
 
 	zombie.body.velocity.y = 50;
+	zombie.hits = 0;
+
+}
+
+function collisionHandler(bullet, zombie) {
+	bullet.kill();
+	zombie.hits++;
+
+	if (zombie.hits == zombieHitPoints) {
+	    zombie.kill();
+
+	    score += 20;
+	}
+
 }
 
 function render() {
