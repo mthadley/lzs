@@ -14,11 +14,14 @@ function preload() {
 	lzs.load.image('ray', 'assets/sprites/player.png');
 	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled.png');
 
+	lzs.load.audio('pew', 'assets/sounds/raygun1.mp3');
+
 }
 
 // Game vars
 
 var ray;
+var pew;
 
 function create() {
 
@@ -33,6 +36,10 @@ function create() {
 	//controls
 	cursors = lzs.input.keyboard.createCursorKeys();
 	fireButton = lzs.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+	//audio
+	pew = lzs.add.audio('pew');
+	pew.allowMultiple = true;
 }
 
 function update() {
@@ -60,7 +67,14 @@ function update() {
 				ray.body.velocity.y = raySpeed;
 			}
 		}
+		if (fireButton.isDown) {
+			fireRay();
+		}
 	}
+}
+
+function fireRay() {
+	pew.play();
 }
 
 function render() {
