@@ -27,6 +27,7 @@ var raySpeed = 1000;
 var score = 0;
 var zombieHitPoints = 3;
 var zombies;
+var zombieSpeed = 50;
 
 function create() {
 	lzs.add.tileSprite(0, 0, screenWidth, screenHeight, 'background');
@@ -116,19 +117,23 @@ function createZombies() {
 function createZombie() {
 	var zombie = zombies.create(screenWidth * Math.random(), -150, 'zombie');
 
-	zombie.body.velocity.y = 50;
+	zombie.body.velocity.y = zombieSpeed;
 	zombie.hits = 0;
-
+	zombie.alive = false;
 }
 
 function collisionHandler(bullet, zombie) {
-	bullet.kill();
-	zombie.hits++;
+	if (!zombie.alive) {
+		bullet.kill();
+		zombie.hits++;
 
-	if (zombie.hits == zombieHitPoints) {
-	    zombie.kill();
+		if (zombie.hits == zombieHitPoints) {
+			zombie.alive = true;
+		    zombie.body.velocity.x = -zombieSpeed;
+		    zombie.body.velocity.y = 0;
 
-	    score += 20;
+		    score += 20;
+		}
 	}
 
 }
