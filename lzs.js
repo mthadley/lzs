@@ -8,6 +8,7 @@ function preload() {
 
 	lzs.load.image('ray', 'assets/sprites/player.png');
 	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled.png');
+	lzs.load.image('zombie', 'assets/sprites/placeholder_zombie.png');
 
 	lzs.load.audio('pew', 'assets/sounds/raygun1.mp3');
 }
@@ -22,6 +23,7 @@ var fireTime = 0;
 var pew;
 var ray;
 var raySpeed = 1000;
+var zombies;
 
 function create() {
 	lzs.add.tileSprite(0, 0, screenWidth, screenHeight, 'background');
@@ -45,6 +47,8 @@ function create() {
 	//controls
 	cursors = lzs.input.keyboard.createCursorKeys();
 	fireButton = lzs.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+	createZombies();
 
 	//audio
 	pew = lzs.add.audio('pew');
@@ -93,6 +97,20 @@ function fireRay() {
 			fireTime = lzs.time.now + fireDelay;
 		}
 	}
+}
+
+function createZombies() {
+	zombies = lzs.add.group();
+	zombies.enableBody = true;
+	zombies.physicsBodyType = Phaser.Physics.ARCADE;
+
+	lzs.time.events.loop(2000, createZombie, this);
+}
+
+function createZombie() {
+	var zombie = zombies.create(screenWidth * Math.random(), 0, 'zombie');
+
+	zombie.body.velocity.y = 50;
 }
 
 function render() {
