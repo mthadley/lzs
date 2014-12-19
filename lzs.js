@@ -112,6 +112,7 @@ function update() {
 
 		//collision detection
 		lzs.physics.arcade.overlap(bullets, zombies, zombieBulletCollisionHandler);
+		lzs.physics.arcade.overlap(ray, zombies, loseGame);
 
 		zombies.forEach(function(zombie) {
 			if (zombie.position.y > (lzs.world.height - zombie.height)) {
@@ -120,11 +121,7 @@ function update() {
 		}, this);
 
 		if (gameLost) {
-				stateText.text = loseText;
-				stateText.visible = true;
-				zombies.destroy();
-				bullets.destroy();
-				ray.destroy();
+			loseGame();
 		}
 	}
 }
@@ -182,6 +179,14 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 			scoreText.text = scoreString + score;
 		}
 	}
+}
+
+function loseGame() {
+	stateText.text = loseText;
+	stateText.visible = true;
+	zombies.destroy();
+	bullets.destroy();
+	ray.destroy();
 }
 
 function render() {
