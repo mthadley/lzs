@@ -11,7 +11,6 @@ function preload() {
 	lzs.load.spritesheet('zombie', 'assets/sprites/zombie-sheet.png', 119, 128);
 	lzs.load.image('beam', 'assets/sprites/beam-01.png');
 	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled-gray.png');
-	lzs.load.image('zombie', 'assets/sprites/placeholder_zombie.png');
 
 	lzs.load.audio('pew', 'assets/sounds/raygun1.mp3');
 	lzs.load.audio('zombie', 'assets/sounds/zombie1.mp3');
