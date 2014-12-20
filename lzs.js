@@ -1,6 +1,7 @@
 var screenWidth = 1024;
 var screenHeight = 768;
 var loseText = 'You lost. You are a loser.';
+var pauseText = 'Paused';
 
 var lzs = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'lzs', { preload: preload, create: create, update: update, render: render });
 
@@ -38,6 +39,7 @@ var score = 0;
 var scoreString = 'Score: ';
 var soundtrack;
 var scoreText;
+var volume = 1;
 var zombieHitPoints = 3;
 var zombies;
 var zombieSpawn;
@@ -77,11 +79,11 @@ function create() {
 	createZombies();
 
 	//audio
-	alive = lzs.add.audio('alive');
-	hit = lzs.add.audio('hit');
-	pew = lzs.add.audio('pew');
-	zombieSpawn = lzs.add.audio('zombie');
-	soundtrack = lzs.add.audio('soundtrack',1,true);
+	alive = lzs.add.audio('alive', volume);
+	hit = lzs.add.audio('hit', volume);
+	pew = lzs.add.audio('pew', volume);
+	zombieSpawn = lzs.add.audio('zombie', volume);
+	soundtrack = lzs.add.audio('soundtrack', volume, true);
 
 	soundtrack.play('',0,0.3,true);
 	setTimeout(function() {zombieSpawn.play();}, 2000);
@@ -199,7 +201,7 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 		zombie.hits++;
 
 		if (zombie.hits < zombieHitPoints) {
-			hit.play('',0,0.7);
+			hit.play();
 		}
 
 		if (zombie.hits == zombieHitPoints) {
@@ -223,6 +225,10 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 				scoreText.text = scoreString + score;
 			}, 200);
 
+			alive.play();
+
+			score += 20;
+			scoreText.text = scoreString + score;
 		}
 	}
 }
@@ -237,4 +243,39 @@ function loseGame() {
 
 function render() {
 	// debug
+}
+
+function toggleMute() {
+	volume = 1 - volume;
+
+	for (audio of [alive, hit, pew, zombieSpawn]) {
+		audio.volume = 1 - audio.volume;
+	}
+
+	if (!soundtrack.paused) {
+		soundtrack.pause();
+
+		document.getElementById('mute').innerHTML = 'Unmute';
+	}
+	else {
+		soundtrack.resume();
+
+		document.getElementById('mute').innerHTML = 'Mute';
+	}
+}
+
+function togglePaused(game) {
+	lzs.paused = !lzs.paused;
+
+	if (lzs.paused) {
+		stateText.text = pauseText;
+		stateText.visible = true;
+
+		document.getElementById('pause').innerHTML = 'Unpause';
+	}
+	else {
+		stateText.visible = false;
+
+		document.getElementById('pause').innerHTML = 'Pause';
+	}
 }
