@@ -9,8 +9,10 @@ function preload() {
 
 	lzs.load.spritesheet('ray', 'assets/sprites/ray-sheet.png', 145, 128, 7);
 	lzs.load.spritesheet('zombie', 'assets/sprites/zombie-sheet.png', 119, 128);
+
 	lzs.load.image('beam', 'assets/sprites/beam-01.png');
 	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled-gray.png');
+	lzs.load.image('logo', 'assets/sprites/logo.png');
 
 	lzs.load.audio('alive', 'assets/sounds/angel1.mp3');
 	lzs.load.audio('hit', 'assets/sounds/grunt1.mp3');
