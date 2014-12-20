@@ -181,7 +181,7 @@ function createZombies() {
 function createZombie() {
 	var position = Math.min(screenWidth * Math.random(), screenWidth - zombieWidth);
 
-	var zombie = zombies.create(position, -150, 'zombie');
+	var zombie = zombies.create(position, -30, 'zombie');
 	zombie.anchor.setTo(0.5, 1);
 
 	zombie.animations.add('walk', [0, 1, 2, 3], 3, true);
@@ -246,7 +246,7 @@ function render() {
 function toggleMute() {
 	volume = 1 - volume;
 
-	for (audio of [alive, hit, pew, zombieSpawn]) {
+	for (var audio of [alive, hit, pew, zombieSpawn]) {
 		audio.volume = 1 - audio.volume;
 	}
 
