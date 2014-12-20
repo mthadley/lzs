@@ -54,7 +54,7 @@ function create() {
 	ray.animations.add('walkBack', [0], 10, false);
 	ray.animations.add('fireForward', [5], true);
 
-	ray.anchor.setTo(.5, 1);
+	ray.anchor.setTo(0.5, 1);
 
 	//rays
 	bullets = lzs.add.group();
@@ -82,7 +82,7 @@ function create() {
 	soundtrack = lzs.add.audio('soundtrack',1,true);
 
 	soundtrack.play('',0,0.3,true);
-	setTimeout(function() {zombieSpawn.play()}, 2000);
+	setTimeout(function() {zombieSpawn.play();}, 2000);
 
 	//text
 	stateText = lzs.add.text(lzs.world.centerX, lzs.world.centerY, ' ', { font: '84px Arial', fill: '#de57d5', textShadow: '#fff'  });
@@ -178,6 +178,12 @@ function createZombie() {
 	var position = Math.min(screenWidth * Math.random(), screenWidth - zombieWidth);
 
 	var zombie = zombies.create(position, -150, 'zombie');
+	zombie.anchor.setTo(0.5, 1);
+
+	zombie.animations.add('walk', [0, 1, 2, 3], 3, true);
+	zombie.animations.add('leave', [9, 10, 11], 6, true);
+
+	zombie.play('walk');
 
 	zombie.body.velocity.y = zombieSpeed;
 	zombie.hits = 0;
@@ -202,9 +208,12 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 			}
 			else {
 				zombie.body.velocity.x = -zombieSpeed * 3;
+				zombie.scale.x = -1;
 			}
 
-			alive.play('',0,1);
+			zombie.play('leave');
+
+			alive.play();
 			score += 20;
 			scoreText.text = scoreString + score;
 		}
