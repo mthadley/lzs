@@ -7,7 +7,7 @@ var lzs = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'lzs', { prelo
 function preload() {
 	// Load sounds and sprites
 
-	lzs.load.spritesheet('ray', 'assets/sprites/ray-sheet.png', 145, 128);
+	lzs.load.spritesheet('ray', 'assets/sprites/ray-sheet.png', 145, 128, 7);
 	lzs.load.spritesheet('zombie', 'assets/sprites/zombie-sheet.png', 119, 128);
 	lzs.load.image('beam', 'assets/sprites/beam-01.png');
 	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled-gray.png');
@@ -49,6 +49,13 @@ function create() {
 
 	ray = lzs.add.sprite(screenWidth * 0.5, screenHeight * 0.8, 'ray');
 
+	ray.animations.add('walkForward', [1, 2], 10, false);
+	ray.animations.add('walkSide', [3, 4], 10, false);
+	ray.animations.add('walkBack', [0], 10, false);
+	ray.animations.add('fireForward', [5], true);
+
+	ray.anchor.setTo(.5, 1);
+
 	//rays
 	bullets = lzs.add.group();
 	bullets.enableBody = true;
@@ -79,8 +86,8 @@ function create() {
 
 	//text
 	stateText = lzs.add.text(lzs.world.centerX, lzs.world.centerY, ' ', { font: '84px Arial', fill: '#de57d5', textShadow: '#fff'  });
-    stateText.anchor.setTo(0.5, 0.5);
-    stateText.visible = false;
+	stateText.anchor.setTo(0.5, 0.5);
+	stateText.visible = false;
 
 	scoreText = lzs.add.text(10, screenHeight - 30, scoreString + score, { font: '24px Arial', fill: '#de57d5', textShadow: '#fff' });
 }
@@ -92,21 +99,29 @@ function update() {
 		if (cursors.left.isDown) {
 			if (ray.position.x > 0) {
 				ray.body.velocity.x = -raySpeed;
+				ray.scale.x = 1;
+				ray.play('walkSide');
 			}
 		}
 		if (cursors.right.isDown) {
 			if (ray.position.x < (lzs.world.width - ray.width)) {
 				ray.body.velocity.x = raySpeed;
+				ray.scale.x = -1;
+				ray.play('walkSide');
 			}
 		}
 		if (cursors.up.isDown) {
 			if (ray.position.y > (lzs.world.height / 2)) {
 				ray.body.velocity.y = -raySpeed;
+				ray.scale.x = 1;
+				ray.play('walkForward');
 			}
 		}
 		if (cursors.down.isDown) {
-			if (ray.position.y < (lzs.world.height - ray.height)) {
+			if (ray.position.y < (lzs.world.height)) {
 				ray.body.velocity.y = raySpeed;
+				ray.scale.x = 1;
+				ray.play('walkBack');
 			}
 		}
 
@@ -137,9 +152,15 @@ function fireRay() {
 		bullet = bullets.getFirstExists(false);
 
 		if (bullet) {
-			bullet.reset(ray.x + 65, ray.y + 8);
+			bullet.reset(ray.x + 10, ray.y - ray.height);
 			bullet.body.velocity.y = -bulletSpeed;
 			fireTime = lzs.time.now + fireDelay;
+
+			ray.play('fireForward');
+
+			setTimeout(function() {
+				ray.play('walkForward');
+			}, 100);
 		}
 	}
 }
