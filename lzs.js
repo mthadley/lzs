@@ -1,8 +1,5 @@
 var screenWidth = 1024;
 var screenHeight = 768;
-var loseText = 'Game over, man! Game over!';
-var pauseText = 'Paused';
-var zombieHitboxScale = 0.5;
 
 var lzs = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'lzs', { preload: preload, create: create, update: update, render: render });
 
@@ -34,6 +31,8 @@ var fireTime = 0;
 var gameLost = false;
 var hit;
 var logo;
+var loseText = 'Game over, man! Game over!';
+var pauseText = 'Paused';
 var pew;
 var ray;
 var raySpeed = 600;
@@ -43,6 +42,7 @@ var scoreText;
 var soundtrack;
 var tween;
 var volume = 1;
+var zombieHitboxScale = 0.5;
 var zombieHitPoints = 3;
 var zombies;
 var zombieSpawn;
@@ -102,13 +102,13 @@ function create() {
 	stateText = lzs.add.text(lzs.world.centerX, lzs.world.centerY, ' ', {fill: '#E9B3F7'});
 	stateText.anchor.setTo(0.5, 0.5);
 	stateText.visible = false;
-	stateText.font = "badaboom";
-	stateText.fontSize  = "84";
+	stateText.font = 'badaboom';
+	stateText.fontSize  = '84';
 
 	//Score
 	scoreText = lzs.add.text(20, screenHeight - 65, scoreString + score, {fill: '#E9B3F7' });
-	scoreText.font = "badaboom";
-	scoreText.fontSize  = "48";
+	scoreText.font = 'badaboom';
+	scoreText.fontSize  = '48';
 	scoreText.visible = false;
 }
 
@@ -196,8 +196,8 @@ function createZombies() {
 
 function createZombie() {
 	var position = Math.min(screenWidth * Math.random(), screenWidth - zombieWidth);
-
 	var zombie = zombies.create(position, -30, 'zombie');
+
 	zombie.anchor.setTo(0.5, 1);
 
 	zombie.animations.add('walkGreen', [0, 1, 2, 3], 3, true);
