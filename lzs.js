@@ -13,19 +13,23 @@ function preload() {
 	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled-gray.png');
 	lzs.load.image('zombie', 'assets/sprites/placeholder_zombie.png');
 
+	lzs.load.audio('alive', 'assets/sounds/angel1.mp3');
+	lzs.load.audio('hit', 'assets/sounds/grunt1.mp3');
 	lzs.load.audio('pew', 'assets/sounds/raygun1.mp3');
-	lzs.load.audio('zombie', 'assets/sounds/zombie1.mp3');
 	lzs.load.audio('soundtrack', 'assets/sounds/soundtrack.mp3');
+	lzs.load.audio('zombie', 'assets/sounds/zombie1.mp3');
 }
 
 // Game vars
 
+var alive;
 var bulletSpeed = 1500;
 var cursors;
 var fireButton;
 var fireDelay =200;
 var fireTime = 0;
 var gameLost = false;
+var hit;
 var pew;
 var ray;
 var raySpeed = 1000;
@@ -66,6 +70,8 @@ function create() {
 	createZombies();
 
 	//audio
+	alive = lzs.add.audio('alive');
+	hit = lzs.add.audio('hit');
 	pew = lzs.add.audio('pew');
 	zombieSpawn = lzs.add.audio('zombie');
 	soundtrack = lzs.add.audio('soundtrack',1,true);
@@ -164,6 +170,10 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 		bullet.kill();
 		zombie.hits++;
 
+		if (zombie.hits < zombieHitPoints) {
+			hit.play('',0,0.7);
+		}
+
 		if (zombie.hits == zombieHitPoints) {
 			zombie.alive = true;
 			zombie.body.velocity.y = 0;
@@ -175,6 +185,7 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 				zombie.body.velocity.x = -zombieSpeed * 3;
 			}
 
+			alive.play('',0,1);
 			score += 20;
 			scoreText.text = scoreString + score;
 		}
