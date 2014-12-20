@@ -2,6 +2,7 @@ var screenWidth = 1024;
 var screenHeight = 768;
 var loseText = 'Game over, man! Game over!';
 var pauseText = 'Paused';
+var zombieHitboxScale = 0.5;
 
 var lzs = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'lzs', { preload: preload, create: create, update: update, render: render });
 
@@ -215,6 +216,8 @@ function createZombie() {
 
 	zombie.body.velocity.y = zombieSpeed;
 	zombie.alive = false;
+
+	zombie.body.setSize(zombie.width * zombieHitboxScale, zombie.height * zombieHitboxScale, 0, -40);
 }
 
 function zombieBulletCollisionHandler(bullet, zombie) {
