@@ -182,6 +182,7 @@ function createZombie() {
 
 	zombie.animations.add('walk', [0, 1, 2, 3], 3, true);
 	zombie.animations.add('leave', [9, 10, 11], 6, true);
+	zombie.animations.add('transform', [8], 1, false);
 
 	zombie.play('walk');
 
@@ -211,11 +212,15 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 				zombie.scale.x = -1;
 			}
 
-			zombie.play('leave');
+			zombie.play('transform');
 
-			alive.play();
-			score += 20;
-			scoreText.text = scoreString + score;
+			setTimeout(function() {
+				zombie.play('leave');
+				alive.play();
+				score += 20;
+				scoreText.text = scoreString + score;
+			}, 200);
+
 		}
 	}
 }
