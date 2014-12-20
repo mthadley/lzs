@@ -32,13 +32,15 @@ var fireDelay =200;
 var fireTime = 0;
 var gameLost = false;
 var hit;
+var logo;
 var pew;
 var ray;
 var raySpeed = 1000;
 var score = 0;
 var scoreString = 'Score: ';
-var soundtrack;
 var scoreText;
+var soundtrack;
+var tween;
 var volume = 1;
 var zombieHitPoints = 3;
 var zombies;
@@ -48,6 +50,13 @@ var zombieWidth = 119;
 
 function create() {
 	lzs.add.tileSprite(0, 0, screenWidth, screenHeight, 'background');
+
+	logo = lzs.add.sprite(50, 100, 'logo');
+
+	setTimeout(function() {
+		logo.destroy();
+		ray.play('walkForward');
+	}, 4000);
 
 	lzs.physics.startSystem(Phaser.Physics.ARCADE);
 
