@@ -98,16 +98,17 @@ function create() {
 	setTimeout(function() {zombieSpawn.play();}, 2000);
 
 	//text
-	stateText = lzs.add.text(lzs.world.centerX, lzs.world.centerY, ' ', {fill: '#fff'});
+	stateText = lzs.add.text(lzs.world.centerX, lzs.world.centerY, ' ', {fill: '#E9B3F7'});
 	stateText.anchor.setTo(0.5, 0.5);
 	stateText.visible = false;
 	stateText.font = "badaboom";
 	stateText.fontSize  = "84";
 
 	//Score
-	scoreText = lzs.add.text(20, screenHeight - 65, scoreString + score, {fill: '#fff' });
+	scoreText = lzs.add.text(20, screenHeight - 65, scoreString + score, {fill: '#E9B3F7' });
 	scoreText.font = "badaboom";
 	scoreText.fontSize  = "48";
+	scoreText.visible = false;
 }
 
 function update() {
@@ -203,7 +204,7 @@ function createZombie() {
 	zombie.animations.add('leave', [9, 10, 11], 6, true);
 	zombie.animations.add('transform', [8], 1, false);
 
-	if (Math.random() > .5) {
+	if (Math.random() > 0.5) {
 		zombie.play('walkGreen');
 		zombie.hits = 0;
 	}
@@ -247,6 +248,7 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 			alive.play();
 
 			score += 20;
+			scoreText.visible = true;
 			scoreText.text = scoreString + score;
 		}
 	}
