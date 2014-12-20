@@ -104,7 +104,7 @@ function update() {
 			}
 		}
 		if (cursors.right.isDown) {
-			if (ray.position.x < (lzs.world.width - ray.width)) {
+			if (ray.position.x < (lzs.world.width)) {
 				ray.body.velocity.x = raySpeed;
 				ray.scale.x = -1;
 				ray.play('walkSide');
