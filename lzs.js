@@ -35,7 +35,7 @@ var hit;
 var logo;
 var pew;
 var ray;
-var raySpeed = 1000;
+var raySpeed = 600;
 var score = 0;
 var scoreString = 'Score: ';
 var scoreText;
@@ -62,9 +62,9 @@ function create() {
 
 	ray = lzs.add.sprite(screenWidth * 0.5, screenHeight * 0.8, 'ray');
 
-	ray.animations.add('walkForward', [1, 2], 10, false);
-	ray.animations.add('walkSide', [3, 4], 10, false);
-	ray.animations.add('walkBack', [0], 10, false);
+	ray.animations.add('walkForward', [1, 2], 6, false);
+	ray.animations.add('walkSide', [3, 4], 6, false);
+	ray.animations.add('walkBack', [0], 6, false);
 	ray.animations.add('fireForward', [5], true);
 
 	ray.anchor.setTo(0.5, 1);
@@ -200,13 +200,14 @@ function createZombie() {
 
 	if (Math.random() > .5) {
 		zombie.play('walkGreen');
+		zombie.hits = 0;
 	}
 	else {
 		zombie.play('walkRed');
+		zombie.hits = -2;
 	}
 
 	zombie.body.velocity.y = zombieSpeed;
-	zombie.hits = 0;
 	zombie.alive = false;
 }
 
