@@ -221,8 +221,6 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 			setTimeout(function() {
 				zombie.play('leave');
 				alive.play();
-				score += 20;
-				scoreText.text = scoreString + score;
 			}, 200);
 
 			alive.play();
