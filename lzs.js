@@ -11,7 +11,6 @@ function preload() {
 	lzs.load.spritesheet('zombie', 'assets/sprites/zombie-sheet.png', 119, 128);
 	lzs.load.image('beam', 'assets/sprites/beam-01.png');
 	lzs.load.image('background', 'assets/sprites/grass-dirt-mix-pixeled-gray.png');
-	lzs.load.image('zombie', 'assets/sprites/placeholder_zombie.png');
 
 	lzs.load.audio('alive', 'assets/sounds/angel1.mp3');
 	lzs.load.audio('hit', 'assets/sounds/grunt1.mp3');
@@ -41,7 +40,7 @@ var zombieHitPoints = 3;
 var zombies;
 var zombieSpawn;
 var zombieSpeed = 50;
-var zombieWidth;
+var zombieWidth = 119;
 
 function create() {
 	lzs.add.tileSprite(0, 0, screenWidth, screenHeight, 'background');
@@ -66,7 +65,6 @@ function create() {
 	cursors = lzs.input.keyboard.createCursorKeys();
 	fireButton = lzs.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-	zombieWidth = lzs.cache.getImage('zombie').width;
 	createZombies();
 
 	//audio
