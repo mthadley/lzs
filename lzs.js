@@ -1,6 +1,6 @@
 var screenWidth = 1024;
 var screenHeight = 768;
-var loseText = 'You lost. You are a loser.';
+var loseText = 'Game over, man! Game over!';
 var pauseText = 'Paused';
 
 var lzs = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'lzs', { preload: preload, create: create, update: update, render: render });
@@ -98,11 +98,16 @@ function create() {
 	setTimeout(function() {zombieSpawn.play();}, 2000);
 
 	//text
-	stateText = lzs.add.text(lzs.world.centerX, lzs.world.centerY, ' ', { font: '84px Arial', fill: '#de57d5', textShadow: '#fff'  });
+	stateText = lzs.add.text(lzs.world.centerX, lzs.world.centerY, ' ', {fill: '#fff'});
 	stateText.anchor.setTo(0.5, 0.5);
 	stateText.visible = false;
+	stateText.font = "badaboom";
+	stateText.fontSize  = "84";
 
-	scoreText = lzs.add.text(10, screenHeight - 30, scoreString + score, { font: '24px Arial', fill: '#de57d5', textShadow: '#fff' });
+	//Score
+	scoreText = lzs.add.text(20, screenHeight - 65, scoreString + score, {fill: '#fff' });
+	scoreText.font = "badaboom";
+	scoreText.fontSize  = "48";
 }
 
 function update() {
