@@ -182,11 +182,17 @@ function createZombie() {
 	var zombie = zombies.create(position, -150, 'zombie');
 	zombie.anchor.setTo(0.5, 1);
 
-	zombie.animations.add('walk', [0, 1, 2, 3], 3, true);
+	zombie.animations.add('walkGreen', [0, 1, 2, 3], 3, true);
+	zombie.animations.add('walkRed', [4, 5, 6, 7], 3, true);
 	zombie.animations.add('leave', [9, 10, 11], 6, true);
 	zombie.animations.add('transform', [8], 1, false);
 
-	zombie.play('walk');
+	if (Math.random() > .5) {
+		zombie.play('walkGreen');
+	}
+	else {
+		zombie.play('walkRed');
+	}
 
 	zombie.body.velocity.y = zombieSpeed;
 	zombie.hits = 0;
