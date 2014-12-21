@@ -98,9 +98,9 @@ function create() {
 	hit = lzs.add.audio('hit', volume);
 	pew = lzs.add.audio('pew', volume);
 	zombieSpawn = lzs.add.audio('zombie', volume);
-	soundtrack = lzs.add.audio('soundtrack', volume, true);
+	soundtrack = lzs.add.audio('soundtrack');
 
-	soundtrack.play('',0,0.3,true);
+	soundtrack.play('', 0, volume / 3, true);
 	setTimeout(function() {zombieSpawn.play();}, 2000);
 
 	//text
@@ -256,7 +256,6 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 
 			setTimeout(function() {
 				zombie.play('leave');
-				alive.play();
 			}, 200);
 
 			alive.play();
