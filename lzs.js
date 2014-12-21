@@ -64,7 +64,7 @@ function create() {
 
 	lzs.physics.startSystem(Phaser.Physics.ARCADE);
 
-	ray = lzs.add.sprite(lzs.width * 0.5, lzs.height * 0.8, 'ray');
+	ray = lzs.add.sprite(lzs.world.width * 0.5, lzs.world.height * 0.8, 'ray');
 
 	ray.animations.add('walkForward', [1, 2], 6, false);
 	ray.animations.add('walkSide', [3, 4], 6, false);
@@ -214,7 +214,7 @@ function createZombies() {
 }
 
 function createZombie() {
-	var position = Math.min(lzs.width * Math.random(), lzs.width - zombieWidth);
+	var position = Math.min(lzs.world.width * Math.random(), lzs.world.width - zombieWidth);
 	var zombie = zombies.create(position, -30, 'zombie');
 
 	zombie.anchor.setTo(0.5, 1);
