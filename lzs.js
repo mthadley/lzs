@@ -26,16 +26,20 @@ var alive;
 var bulletSpeed = 1500;
 var cursors;
 var fireButton;
-var fireDelay =200;
+var fireDelay = 200;
 var fireTime = 0;
 var gameLost = false;
 var hit;
+var level = 1;
+var levelText = 'Level ';
+var levelUpCounter = 0;
+var levelUpReq = 20;
 var logo;
 var loseText = 'Game over, man! Game over!';
 var pauseText = 'Paused';
 var pew;
 var ray;
-var raySpeed = 600;
+var raySpeed = 500;
 var score = 0;
 var scoreString = 'Score: ';
 var scoreText;
@@ -46,6 +50,7 @@ var zombieHitboxScale = 0.5;
 var zombieHitPoints = 3;
 var zombies;
 var zombieSpawn;
+var zombieSpawnLoop;
 var zombieSpeed = 50;
 var zombieWidth = 119;
 
@@ -162,6 +167,11 @@ function update() {
 		if (gameLost) {
 			loseGame();
 		}
+		else if (levelUpCounter == levelUpReq) {
+			levelUpCounter = 0;
+
+			increaseLevel();
+		}
 	}
 }
 
@@ -191,7 +201,7 @@ function createZombies() {
 	zombies.physicsBodyType = Phaser.Physics.ARCADE;
 	zombies.setAll('outOfBoundsKill', true);
 
-	lzs.time.events.loop(2000, createZombie, this);
+	zombieSpawnLoop = lzs.time.events.loop(2000, createZombie, this);
 }
 
 function createZombie() {
@@ -232,6 +242,7 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 		if (zombie.hits == zombieHitPoints) {
 			zombie.alive = true;
 			zombie.body.velocity.y = 0;
+			levelUpCounter++;
 
 			if (zombie.position.x > (lzs.world.width * 0.5)) {
 				zombie.body.velocity.x = zombieSpeed * 3;
@@ -255,6 +266,20 @@ function zombieBulletCollisionHandler(bullet, zombie) {
 			scoreText.text = scoreString + score;
 		}
 	}
+}
+
+function increaseLevel() {
+	level++;
+	levelUpReq += 5;
+	zombieSpawnLoop.delay -= 80;
+	zombieSpeed += 8;
+
+	stateText.text = levelText + level;
+	stateText.visible = true;
+
+	setTimeout(function() {
+		stateText.visible = false;
+	}, 2000);
 }
 
 function loseGame() {
