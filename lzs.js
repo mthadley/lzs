@@ -40,6 +40,7 @@ var score = 0;
 var scoreString = 'Score: ';
 var scoreText;
 var soundtrack;
+var stateText;
 var tween;
 var volume = 1;
 var zombieHitboxScale = 0.5;
@@ -85,6 +86,14 @@ function create() {
 	//controls
 	cursors = lzs.input.keyboard.createCursorKeys();
 	fireButton = lzs.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+	var pauseButton = lzs.input.keyboard.addKey(Phaser.Keyboard.P);
+
+	pauseButton.onDown.add(togglePaused, this);
+
+	var muteButton = lzs.input.keyboard.addKey(Phaser.Keyboard.M);
+
+	muteButton.onDown.add(toggleMuted, this);
 
 	createZombies();
 
@@ -269,7 +278,7 @@ function render() {
 	// debug
 }
 
-function toggleMute() {
+function toggleMuted() {
 	volume = 1 - volume;
 
 	for (var audio of [alive, hit, pew, zombieSpawn]) {
