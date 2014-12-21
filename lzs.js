@@ -1,7 +1,4 @@
-var screenWidth = 1024;
-var screenHeight = 768;
-
-var lzs = new Phaser.Game(screenWidth, screenHeight, Phaser.AUTO, 'lzs', { preload: preload, create: create, update: update, render: render });
+var lzs = new Phaser.Game(1024, 768, Phaser.AUTO, 'lzs', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
 	// Load sounds and sprites
@@ -56,7 +53,7 @@ var zombieSpeed = 50;
 var zombieWidth = 119;
 
 function create() {
-	lzs.add.tileSprite(0, 0, screenWidth, screenHeight, 'background');
+	lzs.add.tileSprite(0, 0, lzs.world.width, lzs.world.height, 'background');
 
 	logo = lzs.add.sprite(50, 100, 'logo');
 
@@ -67,7 +64,7 @@ function create() {
 
 	lzs.physics.startSystem(Phaser.Physics.ARCADE);
 
-	ray = lzs.add.sprite(screenWidth * 0.5, screenHeight * 0.8, 'ray');
+	ray = lzs.add.sprite(lzs.width * 0.5, lzs.height * 0.8, 'ray');
 
 	ray.animations.add('walkForward', [1, 2], 6, false);
 	ray.animations.add('walkSide', [3, 4], 6, false);
@@ -110,7 +107,10 @@ function create() {
 	soundtrack = lzs.add.audio('soundtrack');
 
 	soundtrack.play('', 0, volume / 3, true);
-	setTimeout(function() {zombieSpawn.play();}, 2000);
+
+	setTimeout(function() {
+		zombieSpawn.play();
+	}, 2000);
 
 	//text
 	stateText = lzs.add.text(lzs.world.centerX, lzs.world.centerY, ' ', {fill: '#E9B3F7'});
@@ -120,7 +120,7 @@ function create() {
 	stateText.fontSize  = '84';
 
 	//Score
-	scoreText = lzs.add.text(20, screenHeight - 65, scoreString + score, {fill: '#E9B3F7' });
+	scoreText = lzs.add.text(20, lzs.world.height - 65, scoreString + score, {fill: '#E9B3F7' });
 	scoreText.font = 'badaboom';
 	scoreText.fontSize  = '48';
 	scoreText.visible = false;
@@ -214,7 +214,7 @@ function createZombies() {
 }
 
 function createZombie() {
-	var position = Math.min(screenWidth * Math.random(), screenWidth - zombieWidth);
+	var position = Math.min(lzs.width * Math.random(), lzs.width - zombieWidth);
 	var zombie = zombies.create(position, -30, 'zombie');
 
 	zombie.anchor.setTo(0.5, 1);
